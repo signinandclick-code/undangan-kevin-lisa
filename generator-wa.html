@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator WhatsApp Undangan Pernikahan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --primary: #128c7e;
+            --primary-dark: #075e54;
+            --accent: #25d366;
+            --bg: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-main: #111b21;
+            --text-muted: #667781;
+            --border: #e9edef;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            padding: 24px 16px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .header {
+            background: linear-gradient(135deg, #075e54 0%, #128c7e 100%);
+            color: white;
+            padding: 32px 24px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 25px rgba(7, 94, 84, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .header h1 {
+            font-size: 26px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        .badge-live {
+            background: #25d366;
+            color: #075e54;
+            font-weight: 700;
+            font-size: 12px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 24px;
+        }
+        @media (max-width: 900px) {
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            margin-bottom: 24px;
+        }
+        .card h2 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-dark);
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--text-main);
+            transition: border-color 0.2s;
+            outline: none;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary);
+        }
+        textarea { resize: vertical; min-height: 110px; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background: #25d366;
+            color: #075e54;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background: #20ba5a;
+        }
+        .btn-wa {
+            background: #25d366;
+            color: white;
+            padding: 8px 14px;
+            font-size: 13px;
+            border-radius: 8px;
+        }
+        .btn-wa:hover {
+            background: #1eb857;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+        .btn-secondary {
+            background: #e9edef;
+            color: var(--text-main);
+            padding: 8px 12px;
+            font-size: 12px;
+            border-radius: 8px;
+        }
+        .btn-secondary:hover { background: #d1d7db; }
+        .stats-bar {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .stat-box {
+            flex: 1;
+            background: #f7f9fa;
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .stat-box .num {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+        .stat-box .label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+        }
+        th, td {
+            padding: 13px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: #f7f9fa;
+            font-weight: 700;
+            color: var(--text-muted);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+        tr:hover { background: #fbfcfc; }
+        .badge-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .status-sent { background: #dcf8c6; color: #075e54; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .preview-box {
+            background: #efeae2;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            white-space: pre-wrap;
+            color: #111b21;
+            border: 1px solid #d1d7db;
+            margin-top: 10px;
+            font-family: inherit;
+        }
+        .action-row {
+            display: flex;
+            gap: 6px;
+        }
+        .tag-pill {
+            background: #e9edef;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #54656f;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div>
+            <h1><i class="ph-bold ph-whatsapp-logo"></i> Smart WhatsApp Sender</h1>
+            <p>Generator pesan & pengirim undangan pernikahan via WhatsApp pribadi</p>
+        </div>
+        <div class="badge-live">
+            <i class="ph-fill ph-circle"></i> Siap Pakai
+        </div>
+    </div>
+
+    <div class="grid-layout">
+        <!-- Sidebar: Pengaturan & Form Input -->
+        <div>
+            <div class="card">
+                <h2><i class="ph ph-gear"></i> Konfigurasi Undangan</h2>
+                <div class="form-group">
+                    <label>URL Website Undangan</label>
+                    <input type="text" id="cfg-url" value="./index.html" placeholder="https://alishakeenan.katsudoto.id">
+                    <small style="color:#667781;font-size:11px;">Gunakan <code>./index.html</code> untuk uji lokal atau ganti URL hosting online lo.</small>
+                </div>
+                <div class="form-group">
+                    <label>Nama Kedua Mempelai</label>
+                    <input type="text" id="cfg-couple" value="Alisha & Keenan">
+                </div>
+                <div class="form-group">
+                    <label>Tanggal & Lokasi</label>
+                    <input type="text" id="cfg-date" value="Sabtu, 03 Februari 2024">
+                </div>
+            </div>
+
+            <div class="card">
+                <h2><i class="ph ph-user-plus"></i> Tambah Tamu</h2>
+                <form id="form-add-guest" onsubmit="addGuest(event)">
+                    <div class="form-group">
+                        <label>Nama Tamu / Pasangan</label>
+                        <input type="text" id="guest-name" placeholder="Contoh: Budi Santoso & Partner" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nomor WhatsApp</label>
+                        <input type="tel" id="guest-phone" placeholder="Contoh: 08123456789" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Kategori</label>
+                        <select id="guest-cat">
+                            <option value="Teman">Teman</option>
+                            <option value="Keluarga">Keluarga</option>
+                            <option value="Rekan Kerja">Rekan Kerja</option>
+                            <option value="VIP">VIP</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="ph-bold ph-plus"></i> Simpan ke Daftar
+                    </button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2><i class="ph ph-chat-text"></i> Template Pesan</h2>
+                <div class="form-group">
+                    <label>Gaya Bahasa</label>
+                    <select id="template-style" onchange="updatePreview()">
+                        <option value="formal">1. Formal & Sopan (Standar)</option>
+                        <option value="santai">2. Santai / Akrab (Teman/Sahabat)</option>
+                        <option value="singkat">3. Singkat / To The Point</option>
+                    </select>
+                </div>
+                <label>Pratinjau Teks Chat:</label>
+                <div id="text-preview" class="preview-box"></div>
+            </div>
+        </div>
+
+        <!-- Main Column: Daftar Tamu & Action Blast -->
+        <div>
+            <div class="card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <h2><i class="ph ph-address-book"></i> Daftar Tamu Undangan</h2>
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn btn-secondary" onclick="exportData()"><i class="ph ph-download"></i> Ekspor</button>
+                        <button class="btn btn-secondary" onclick="clearData()"><i class="ph ph-trash"></i> Reset</button>
+                    </div>
+                </div>
+
+                <div class="stats-bar">
+                    <div class="stat-box">
+                        <div class="num" id="stat-total">0</div>
+                        <div class="label">Total Tamu</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="num" id="stat-sent" style="color:#25d366;">0</div>
+                        <div class="label">Terkirim</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="num" id="stat-pending" style="color:#e67e22;">0</div>
+                        <div class="label">Belum Terkirim</div>
+                    </div>
+                </div>
+
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama Tamu</th>
+                                <th>WhatsApp</th>
+                                <th>Kategori</th>
+                                <th>Status</th>
+                                <th style="text-align:right;">Aksi Kirim</th>
+                            </tr>
+                        </thead>
+                        <tbody id="guest-table-body">
+                            <!-- Injected dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // In-memory / localStorage database
+    let guests = JSON.parse(localStorage.getItem('wedding_guests') || '[]');
+
+    // Sample default guests if empty
+    if (guests.length === 0) {
+        guests = [
+            { id: 1, name: "Budi Santoso & Partner", phone: "081234567890", cat: "Teman", sent: false },
+            { id: 2, name: "Keluarga Besar Bpk. Rahmat", phone: "081987654321", cat: "Keluarga", sent: true },
+            { id: 3, name: "Dian & Team Kreatif", phone: "085711223344", cat: "Rekan Kerja", sent: false }
+        ];
+        saveStorage();
+    }
+
+    function saveStorage() {
+        localStorage.setItem('wedding_guests', JSON.stringify(guests));
+        renderTable();
+    }
+
+    function formatPhone(phone) {
+        let p = phone.replace(/[^0-9]/g, '');
+        if (p.startsWith('0')) {
+            p = '62' + p.substring(1);
+        } else if (p.startsWith('8')) {
+            p = '62' + p;
+        }
+        return p;
+    }
+
+    function getMessageText(guestName) {
+        const couple = document.getElementById('cfg-couple').value.trim();
+        const date = document.getElementById('cfg-date').value.trim();
+        const base = document.getElementById('cfg-url').value.trim();
+        const style = document.getElementById('template-style').value;
+        const link = `${base}?to=${encodeURIComponent(guestName)}`;
+
+        if (style === 'santai') {
+            return `Halo ${guestName}! 👋\n\nNggak kerasa nih, bentar lagi hari pernikahan kami (${couple}). Kami mengundang kamu buat hadir dan merayakan momen bahagia ini bersama kami:\n\n📅 ${date}\n\nUntuk detail lengkap jadwal & lokasi acara, yuk buka undangan digitalnya di sini:\n👉 ${link}\n\nKehadiran dan doa restumu sangat berarti buat kami. Sampai ketemu di hari H yaa! ✨`;
+        } else if (style === 'singkat') {
+            return `Yth. ${guestName},\n\nBerikut kami lampirkan tautan undangan pernikahan digital ${couple}:\n👉 ${link}\n\n📅 ${date}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Anda berkenan hadir dan memberikan doa restu. Terima kasih.`;
+        } else {
+            return `Kepada Yth. Bapak/Ibu/Saudara/i\n*${guestName}*\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Anda untuk menghadiri acara pernikahan kami:\n\n*The Wedding of ${couple}*\n📅 ${date}\n\nDetail lengkap acara, denah lokasi, dan buku ucapan dapat diakses melalui tautan undangan berikut:\n👉 ${link}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir serta memberikan doa restu.\n\nTerima kasih,\n*${couple}*`;
+        }
+    }
+
+    function updatePreview() {
+        const preview = document.getElementById('text-preview');
+        preview.innerText = getMessageText('Budi Santoso & Partner');
+    }
+
+    function addGuest(e) {
+        e.preventDefault();
+        const name = document.getElementById('guest-name').value.trim();
+        const phone = document.getElementById('guest-phone').value.trim();
+        const cat = document.getElementById('guest-cat').value;
+
+        if (!name || !phone) return;
+
+        guests.push({
+            id: Date.now(),
+            name: name,
+            phone: phone,
+            cat: cat,
+            sent: false
+        });
+
+        saveStorage();
+        document.getElementById('form-add-guest').reset();
+    }
+
+    function toggleStatus(id) {
+        const item = guests.find(g => g.id === id);
+        if (item) {
+            item.sent = !item.sent;
+            saveStorage();
+        }
+    }
+
+    function deleteGuest(id) {
+        if (confirm('Hapus tamu ini dari daftar?')) {
+            guests = guests.filter(g => g.id !== id);
+            saveStorage();
+        }
+    }
+
+    function sendWhatsApp(id) {
+        const item = guests.find(g => g.id === id);
+        if (!item) return;
+
+        const cleanPhone = formatPhone(item.phone);
+        const text = getMessageText(item.name);
+        const waUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(text)}`;
+
+        // Mark as sent
+        item.sent = true;
+        saveStorage();
+
+        // Open WhatsApp in new tab / app
+        window.open(waUrl, '_blank');
+    }
+
+    function renderTable() {
+        const tbody = document.getElementById('guest-table-body');
+        tbody.innerHTML = '';
+
+        let sentCount = 0;
+
+        guests.forEach(g => {
+            if (g.sent) sentCount++;
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${g.name}</strong></td>
+                <td style="color:#667781;">${g.phone}</td>
+                <td><span class="tag-pill">${g.cat}</span></td>
+                <td>
+                    <span class="badge-status ${g.sent ? 'status-sent' : 'status-pending'}" style="cursor:pointer;" onclick="toggleStatus(${g.id})">
+                        ${g.sent ? '✓ Terkirim' : 'Belum'}
+                    </span>
+                </td>
+                <td style="text-align:right;">
+                    <div class="action-row" style="justify-content:flex-end;">
+                        <button class="btn btn-wa" onclick="sendWhatsApp(${g.id})" title="Kirim via WhatsApp">
+                            <i class="ph-bold ph-paper-plane-tilt"></i> Kirim WA
+                        </button>
+                        <button class="btn btn-secondary" onclick="deleteGuest(${g.id})" title="Hapus">
+                            <i class="ph ph-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        // Update stats
+        document.getElementById('stat-total').innerText = guests.length;
+        document.getElementById('stat-sent').innerText = sentCount;
+        document.getElementById('stat-pending').innerText = guests.length - sentCount;
+    }
+
+    function exportData() {
+        const blob = new Blob([JSON.stringify(guests, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'daftar-tamu-undangan.json';
+        a.click();
+    }
+
+    function clearData() {
+        if (confirm('Yakin ingin mereset seluruh daftar tamu?')) {
+            guests = [];
+            saveStorage();
+        }
+    }
+
+    // Init
+    updatePreview();
+    renderTable();
+</script>
+
+</body>
+</html>
